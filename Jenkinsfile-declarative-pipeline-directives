@@ -15,7 +15,7 @@ pipeline {
         stage ('SHOW ENV'){
             steps {
                 echo "FIRST_ENV = ${FIRST_ENV}"
-               echo "SECOND_ENV = ${SECOND_ENV}"2
+               echo "SECOND_ENV = ${SECOND_ENV}"
             }
         }
         stage ('Check timeout'){
