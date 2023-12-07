@@ -19,7 +19,9 @@ pipeline {
             }
         }
         stage ('Check timeout'){
+            options{
           timeout(time: 30, unit: 'SECONDS')
+            }
             steps {
                 echo "check timeout"
                 sh "sleep 40"
