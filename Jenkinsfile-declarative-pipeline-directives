@@ -1,5 +1,7 @@
 pipeline {
-    agent slave01
+    agent {
+        node 'slave01'
+    }
   environment {
     FIRST_ENV = 'FIRST'
     SECOND_ENV = 'SECOND'
