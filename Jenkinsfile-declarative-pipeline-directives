@@ -8,7 +8,7 @@ pipeline {
   }
   options{
     buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr: '7'))
-    temout(time:5, unit: 'MINUTES')
+    timeout(time:5, unit: 'MINUTES')
     timestamps()
   }
     stages {
