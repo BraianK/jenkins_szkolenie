@@ -1,0 +1,27 @@
+pipeline {
+    agent {
+        node 'slave01'
+    }
+    stages {
+        stage ('STAGE-A'){
+            input {
+                message 'Continue?'
+                submitter 'braian_kreft'
+                submitterParameter 'SUBMITTER'
+            }
+        }
+        stage ('STAGE-B'){
+            parallel {
+                stage ('STAGE-C'){
+
+                }
+                stage ('STAGE-D'){
+                    sh "exit 1"
+                }
+                stage ('STAGE-E'){
+                    
+                }
+            }
+        }
+    }
+}
