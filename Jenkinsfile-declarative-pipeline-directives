@@ -2,25 +2,25 @@ pipeline {
     agent {
         node 'slave01'
     }
-  environment {
-    FIRST_ENV = 'FIRST'
-    SECOND_ENV = 'SECOND'
-  }
-  options{
-    buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr: '7'))
-    timeout(time:5, unit: 'MINUTES')
-    timestamps()
-  }
+    environment {
+        FIRST_ENV = 'FIRST'
+        SECOND_ENV = 'SECOND'
+    }
+    options{
+        buildDiscarder(logRotator(numToKeepStr: '3', artifactNumToKeepStr: '7'))
+        temout(time:5, unit: 'MINUTES')
+        timestamps()
+    }
     stages {
         stage ('SHOW ENV'){
             steps {
                 echo "FIRST_ENV = ${FIRST_ENV}"
-               echo "SECOND_ENV = ${SECOND_ENV}"
+                echo "SECOND_ENV = ${SECOND_ENV}"
             }
         }
         stage ('Check timeout'){
             options{
-          timeout(time: 30, unit: 'SECONDS')
+                timeout(time: 30, unit: 'SECONDS')
             }
             steps {
                 echo "check timeout"
