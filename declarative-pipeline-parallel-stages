@@ -9,17 +9,20 @@ pipeline {
                 submitter 'braian_kreft'
                 submitterParameter 'SUBMITTER'
             }
+            steps{}
         }
         stage ('STAGE-B'){
             parallel {
                 stage ('STAGE-C'){
-
+                    steps{}
                 }
-                stage ('STAGE-D'){
+                stage ('STAGE-D'){ 
+                    steps{
                     sh "exit 1"
+                    }
                 }
                 stage ('STAGE-E'){
-                    
+                    steps{}
                 }
             }
         }
