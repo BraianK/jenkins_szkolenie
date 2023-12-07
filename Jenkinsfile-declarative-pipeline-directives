@@ -24,6 +24,7 @@ pipeline {
             }
             steps {
                 echo "check timeout"
+                sh "la -ls"
                 sh "sleep 40"
             }
         }
