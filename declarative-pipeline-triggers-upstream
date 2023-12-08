@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+    parameters {
+        choice choices: ['dev'.'stage','demo','prod'], description: 'środowisko', name: 'environment'
+    }
+    stages{
+        stage('STAGE 1'){
+            steps{
+                echo "executing"
+                sh "exit 1"
+            }     
+        }
+    }
+    post{
+        failure{
+            build job: 'declarative-pipeline-triggers-downstream', parameters:[
+                string(name:'ENV',value:params.environment)
+            ]
+        }
+    }
+}
