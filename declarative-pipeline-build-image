@@ -33,7 +33,6 @@ pipeline {
                 {
                     sh "docker login -u $username -p $password $CONTAINER_REGISTRY"
                 }
-                sh "echo ${env.IMAGE_PATH}"
                 sh "docker build . -t $IMAGE_PATH"
                 sh "docker push $IMAGE_PATH"
                 }
