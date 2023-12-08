@@ -3,7 +3,7 @@ pipeline {
         node 'slave01'
     }
     environment {
-        githubCredentialsID = "github-access-credentials-braian-k"
+        githubCredentialsID = "github-access-mgworkshop"
         python_app_git_repo = "https://github.com/devopsit-mg/python-app-k8s.git"
         CONTAINER_REGISTRY = "ghcr.io"
         IMAGE_WORKSPACE = "braian_k"
