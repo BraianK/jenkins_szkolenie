@@ -25,7 +25,7 @@ pipeline {
         stage('clone repo'){
             steps{
                 script {
-                    cleanWS()
+                    cleanWs()
                     git branch:'main', credentialsId: 'github-access-credentials-braian-k', url: 'https://github.com/devopsit-mg/python-app-k8s.git'
                     sh "ls -lart ./*" 
                      sh "pwd" 
