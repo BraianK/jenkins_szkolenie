@@ -1,11 +1,8 @@
 pipeline {
-    agent none
-    
-    options{
-        timestamps()
+    agent {
+        node 'slave01'
     }
-    
-	environment {
+    environment {
         githubCredentialsID = "github-access-credentials-braian-k"
         python_app_git_repo = "https://github.com/devopsit-mg/python-app-k8s.git"
         CONTAINER_REGISTRY = "ghcr.io"
@@ -13,32 +10,35 @@ pipeline {
         IMAGE_NAME = "python-app"
         IMAGE_VERSION = 1.0
         IMAGE_PATH = "$CONTAINER_REGISTRY/$IMAGE_WORKSPACE/$IMAGE_NAME:$IMAGE_VERSION"
+        // Helm variables
+        HELM_RELEASE_NAME = "python-app"
+        // Gke Variables
+        GCP_PROJECT_ID = "admin-project-273017"
+        GKE_CLUSTER_NAME = "mgworkshop"
+        GKE_REGION = "europe-west4"
 
+    }
+    parameters {
+        string(name: 'branch', defaultValue: 'main', description: 'branch to checkout')
     }
     stages{
         stage('clone repo'){
-            agent {
-                docker { 
-                    image 'alpine:3.6' 
-                    label 'slave01' 
-                    reuseNode true 
-                }
-            } 
             steps{
-                git branch: 'main', credentialsId: 'github-access-credentials-dgerwatowski', url: 'https://github.com/devopsit-mg/python-app-k8s.git', poll: true, changelog: true
+                git url: env.python_app_git_repo, branch: params.branch, changelog: true, credentialsId: env.githubCredentialsID, poll: true
             }     
         }
         stage("Build image") {
-            agent { label 'slave01' }
-            steps {
-              withCredentials([usernamePassword(credentialsId: env.githubCredentialsID, usernameVariable: 'username', passwordVariable: 'password')])
-              {
-                  sh "docker login -u $username -p $password $CONTAINER_REGISTRY"
-              }
-              sh "docker build . -t $IMAGE_PATH"
-              sh "docker push $IMAGE_PATH"
-            }
+                steps {
+                withCredentials([usernamePassword(credentialsId: env.githubCredentialsID, usernameVariable: 'username', passwordVariable: 'password')])
+                {
+                    sh "docker login -u $username -p $password $CONTAINER_REGISTRY"
+                }
+                sh "echo ${env.IMAGE_PATH}"
+                sh "docker build . -t $IMAGE_PATH"
+                sh "docker push $IMAGE_PATH"
+                }
 
         }
     }
+
 }
