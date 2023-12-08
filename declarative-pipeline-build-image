@@ -2,6 +2,22 @@ pipeline {
     agent {
         node 'slave01'
     }
+    environment {
+        githubCredentialsID = "github-access-mgworkshop"
+        python_app_git_repo = "https://github.com/devopsit-mg/python-app-k8s.git"
+        CONTAINER_REGISTRY = "ghcr.io"
+        IMAGE_WORKSPACE = "braian-k"
+        IMAGE_NAME = "python-app"
+        IMAGE_VERSION = 1.0
+        IMAGE_PATH = "$CONTAINER_REGISTRY/$IMAGE_WORKSPACE/$IMAGE_NAME:$IMAGE_VERSION"
+        // Helm variables
+        HELM_RELEASE_NAME = "python-app"
+        // Gke Variables
+        GCP_PROJECT_ID = "admin-project-273017"
+        GKE_CLUSTER_NAME = "mgworkshop"
+        GKE_REGION = "europe-west4"
+
+    }
     parameters {
         choice choices: ['dev','stage','demo','prod'], description: 'środowisko', name: 'environment'
     }
@@ -9,10 +25,23 @@ pipeline {
         stage('clone repo'){
             steps{
                 script {
-                    git branch: 'main', credentialsId: 'github-access-credentials-braian-k', url: 'https://github.com/devopsit-mg/python-app-k8s.git'
+                    git credentialsId: 'github-access-credentials-braian-k', url: 'https://github.com/devopsit-mg/python-app-k8s.git'
                     sh "ls -lart ./*" 
                 }
             }     
         }
+        stage("Build image") {
+                agent { label 'slave01' }
+                steps {
+                withCredentials([usernamePassword(credentialsId: 'github-access-credentials-braian-k', usernameVariable: 'username', passwordVariable: 'password')])
+                {
+                    sh "docker login -u $username -p $password $CONTAINER_REGISTRY"
+                }
+                sh "docker build . -t $IMAGE_PATH"
+                sh "docker push $IMAGE_PATH"
+                }
+
+        }
     }
+
 }
