@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    parameters {
+        choice choices: ['dev'.'stage','demo','prod'], description: 'środowisko', name: 'environment'
+    }
+    stages{
+        stage('STAGE 1'){
+            when{
+                expression {params.environment ==='demo'}
+            }
+            steps{
+                echo "Deployment on $params.environment"
+            }     
+        }
+        stage('STAGE 2'){
+            steps{
+                script{
+                    if(params.environment === 'demo'){
+                        echo "Deployment on $params.environment"
+                    }
+                }
+            }
+        }
+    }
+}
