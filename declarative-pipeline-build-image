@@ -9,7 +9,7 @@ pipeline {
         stage('clone repo'){
             steps{
                 script {
-                    git credentialsId: 'github-access-credentials-braian-k', url: 'https://github.com/devopsit-mg/python-app-k8s.git'
+                    git branch: 'main', credentialsId: 'github-access-credentials-braian-k', url: 'https://github.com/devopsit-mg/python-app-k8s.git'
                     sh "ls -lart ./*" 
                 }
             }     
