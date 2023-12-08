@@ -1,0 +1,18 @@
+pipeline {
+    agent {
+        node 'slave01'
+    }
+    parameters {
+        choice choices: ['dev','stage','demo','prod'], description: 'środowisko', name: 'environment'
+    }
+    stages{
+        stage('clone repo'){
+            steps{
+                script {
+                    git credentialsId: 'github-access-credentials-braian-k', url: 'https://github.com/devopsit-mg/python-app-k8s.git'
+                    sh "ls -lart ./*" 
+                }
+            }     
+        }
+    }
+}
