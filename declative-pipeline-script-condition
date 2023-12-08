@@ -1,4 +1,4 @@
-pipeline {
+rnpipeline {
     agent any
     parameters {
         choice choices: ['dev'.'stage','demo','prod'], description: 'środowisko', name: 'environment'
@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage('STAGE 1'){
             when{
-                expression {params.environment =='demo'}
+                expression {return params.environment =='demo'}
             }
             steps{
                 echo "Deployment on $params.environment"
