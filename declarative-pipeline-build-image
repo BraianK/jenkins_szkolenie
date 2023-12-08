@@ -9,7 +9,7 @@ pipeline {
         githubCredentialsID = "github-access-credentials-braian-k"
         python_app_git_repo = "https://github.com/devopsit-mg/python-app-k8s.git"
         CONTAINER_REGISTRY = "ghcr.io"
-        IMAGE_WORKSPACE = "dgerwatowski-git"
+        IMAGE_WORKSPACE = "braiank"
         IMAGE_NAME = "python-app"
         IMAGE_VERSION = 1.0
         IMAGE_PATH = "$CONTAINER_REGISTRY/$IMAGE_WORKSPACE/$IMAGE_NAME:$IMAGE_VERSION"
