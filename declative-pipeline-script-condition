@@ -6,7 +6,7 @@ pipeline {
     stages{
         stage('STAGE 1'){
             when{
-                expression {params.environment ==='demo'}
+                expression {$params.environment ==='demo'}
             }
             steps{
                 echo "Deployment on $params.environment"
@@ -15,7 +15,7 @@ pipeline {
         stage('STAGE 2'){
             steps{
                 script{
-                    if(params.environment === 'demo'){
+                    if($params.environment === 'demo'){
                         echo "Deployment on $params.environment"
                     }
                 }
