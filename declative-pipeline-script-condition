@@ -15,7 +15,7 @@ pipeline {
         stage('STAGE 2'){
             steps{
                 script{
-                    if(params.environment == 'demo'){
+                    if(params.environment != 'demo'){
                         echo "Deployment on $params.environment"
                     }
                 }
