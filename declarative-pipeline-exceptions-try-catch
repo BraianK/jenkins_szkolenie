@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        node:'slave01'
+        node 'slave01'
     }
     parameters {
         choice choices: ['dev','stage','demo','prod'], description: 'środowisko', name: 'environment'
