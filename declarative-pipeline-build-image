@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        node 'slave01'
-    }
+    agent none
     environment {
         githubCredentialsID = "github-access-credentials-braian-k"
         python_app_git_repo = "https://github.com/devopsit-mg/python-app-k8s.git"
@@ -23,11 +21,19 @@ pipeline {
     }
     stages{
         stage('clone repo'){
+            agent {
+                docker { 
+                    image 'alpine:3.6' 
+                    label 'slave01' 
+                    reuseNode true 
+                }
+            } 
             steps{
                 git url: env.python_app_git_repo, branch: params.branch, changelog: true, credentialsId: env.githubCredentialsID, poll: true
             }     
         }
         stage("Build image") {
+agent { label 'slave01' }
                 steps {
                 withCredentials([usernamePassword(credentialsId: env.githubCredentialsID, usernameVariable: 'username', passwordVariable: 'password')])
                 {
