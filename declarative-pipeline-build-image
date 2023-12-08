@@ -9,7 +9,7 @@ pipeline {
         IMAGE_WORKSPACE = "braian_k"
         IMAGE_NAME = "python-app"
         IMAGE_VERSION = 1.0
-        IMAGE_PATH = "/var/lib/jenkins/workspace/braian_k/declarative-pipeline-build-image/$IMAGE_NAME:$IMAGE_VERSION"
+        IMAGE_PATH = "$CONTAINER_REGISTRY/$IMAGE_WORKSPACE/$IMAGE_NAME:$IMAGE_VERSION"
         // Helm variables
         HELM_RELEASE_NAME = "python-app"
         // Gke Variables
